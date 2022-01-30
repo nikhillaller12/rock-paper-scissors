@@ -4,23 +4,10 @@
   box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-  height: 100vh;
-  background-color: lightblue;
-  font-family: sans-serif;
-}
-
 .heading {
   font-size: 50px;
 }
 
-.score {
-  height: 20vh;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
 
 .choice {
   height: 25vh;

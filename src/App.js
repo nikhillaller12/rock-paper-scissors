@@ -5,10 +5,7 @@ const App = () => {
   const [userChoice, setUserChoice] = useState('rock')
   const [computerChoice, setComputerChoice] = useState('rock')
   const [userPoints, setUserPoints] = useState(0)
-  const [computerPoints, setComputerPoints] = useState(0)
   const [turnResult, setTurnResult] = useState(null)
-  const [result, setResult] = useState('Let\'s see who wins')
-  const [gameOver, setGameOver] = useState(false)
   const choices = ['rock', 'paper', 'scissors']
 
   const handleClick = (value) => {
@@ -21,51 +18,36 @@ const App = () => {
     setComputerChoice(randomChoice)
   }
 
-  const reset = () => {
-    window.location.reload()
-  }
-
   useEffect(() => {
-    const comboMoves = userChoice + computerChoice
-    if (userPoints <= 4 && computerPoints <= 4) {
+    const comboMoves = userChoice + computerChoice;
       if (comboMoves === 'scissorspaper' || comboMoves === 'rockscissors' || comboMoves === 'paperrock') {
-        // userPoints.current += 1
-        const updatedUserPoints = userPoints + 1
-        setUserPoints(updatedUserPoints)
-        setTurnResult('User gets the point!')
-        if (updatedUserPoints === 5){
-          setResult('User Wins')
-          const gameOff = true
-          setGameOver(gameOff)
-        }
+        setUserPoints(userPoints + 1)
+        setTurnResult('You Won')
       }
 
-      if (comboMoves === 'paperscissors' || comboMoves === 'scissorsrock' || comboMoves === 'rockpaper') {
-        // computerPoints.current += 1
-        const updatedComputerPoints = computerPoints + 1
-        setComputerPoints(updatedComputerPoints)
-        setTurnResult('Computer gets the point!')
-        if (updatedComputerPoints === 5) {
-          setResult('Computer Wins')
-          const gameOff = true
-          setGameOver(gameOff)
-        }
+      else if (comboMoves === 'paperscissors' || comboMoves === 'scissorsrock' || comboMoves === 'rockpaper') {
+        setUserPoints(userPoints - 1)
+        setTurnResult('You Lose')
       }
 
-      if (comboMoves === 'paperpaper' || comboMoves === 'rockrock' || comboMoves === 'scissorsscissors') {
-        setTurnResult('No one gets a point!')
+      else if (comboMoves === 'paperpaper' || comboMoves === 'rockrock' || comboMoves === 'scissorsscissors') {
+        setTurnResult('Draw')
       }
-    }
-  }, [computerChoice, userChoice])
+  },[computerChoice,userChoice])
 
   return (
-    <div className="App">
-      <h1 className='heading'>Rock-Paper-Scissors</h1>
-      <div className='score'>
-        <h1>User Points: {userPoints}</h1>
-        <h1>Computer Points: {computerPoints}</h1>
+    <div className='bg-info p-2 text-white bg-opacity-50'>
+      <div className="d-flex justify-content-around border border-2 border-dark text-dark" style={{margin:"30px 180px 20px 180px",padding:"10px"}}>
+        <div>
+        <h2>Rock</h2>
+        <h2>Paper</h2>
+        <h2>Scissor</h2>
+        </div>
+      <div>
+        <h2>Score</h2>
+        <h2>{userPoints}</h2>
       </div>
-
+      </div>
       <div className='choice'>
         <div className='choice-user'>
           <img className='user-hand' src={`../images/${userChoice}.png`} alt=''></img>
@@ -74,26 +56,16 @@ const App = () => {
           <img className='computer-hand' src={`../images/${computerChoice}.png`} alt=''></img>
         </div>
       </div>
-      
-      <div className='button-div'>
-        {choices.map((choice, index) =>
-          <button className='button' key={index} onClick={() => handleClick(choice)} disabled={gameOver}>
-            {choice} 
-          </button>
-        )}
+      <div className="conatiner text-center mt-5">
+      <button type="button" class="btn btn-outline-dark mx-5" onClick={() => handleClick('rock')}>Rock</button>
+      <button type="button" class="btn btn-outline-dark mx-5" onClick={() => handleClick('paper')}>Paper</button><br/>
+      <button type="button" class="btn btn-outline-dark my-2" onClick={() => handleClick('scissors')}>Scissor</button>
       </div>
-      
-      <div className='result'>
-        <h1>Turn Result: {turnResult}</h1>
-        <h1>Final Result: {result}</h1>
+    
+      <div className="conatiner text-center text-dark mb-5">
+        <h1>{turnResult}</h1>
       </div>
-      
-      <div className='button-div'>
-        {gameOver && 
-          <button className='button' onClick={() => reset()}>Restart Game?</button>
-        }
       </div>
-    </div>
   )
 }
 
